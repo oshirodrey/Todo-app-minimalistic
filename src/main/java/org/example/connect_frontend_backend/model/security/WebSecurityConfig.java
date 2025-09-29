@@ -30,13 +30,31 @@ public class WebSecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v*/registration/**").permitAll()
+                        .requestMatchers("/api/registration").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults());   // or .httpBasic(Customizer.withDefaults())
 
         return http.build();
     }
+//    SecurityFilterChain securityFilterChain(HttpSecurity http)
+//
+//    csrf(csrf -> csrf.disable())
+//    Disables CSRF protection. Fine for APIs / Postman testing or JWT setups; for classic HTML form apps you normally keep CSRF enabled.
+//
+//            authorizeHttpRequests(...)
+//
+//            .requestMatchers("/api/v*/registration/**").permitAll()
+//    Anyone (even not logged in) can hit registration endpoints like /api/v1/registration/....
+//
+//            .anyRequest().authenticated()
+//    Every other endpoint requires the user to be logged in.
+//
+//    formLogin(Customizer.withDefaults())
+//    Enables Spring’s default login page and form-login flow. If an unauthenticated user hits a protected URL, they’ll be redirected to /login.
+//
+//return http.build();
+//    Finalizes the filter chain Spring Security uses to protect routes.
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

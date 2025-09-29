@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -23,24 +23,21 @@ public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+    private String firstName;
+    private String lastName;
     private String password;
-    private String name;
     private String email;
     private AppUserRole appUserRole;
     private Boolean enabled;
     private Boolean locked;
 
 
-
-    public AppUser(String username, String password, String name, String email, AppUserRole appUserRole, Boolean enabled, Boolean locked) {
-        this.username = username;
+    public AppUser(String firstName, String lastName, String password, String email, AppUserRole appUserRole) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.password = password;
-        this.name = name;
         this.email = email;
         this.appUserRole = appUserRole;
-        this.enabled = enabled;
-        this.locked = locked;
     }
 
     @Override
@@ -56,8 +53,16 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
+
+//    public String getFirstName() {
+//        return firstName;
+//    }
+//    public String getLastName() {
+//        return lastName;
+//    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
