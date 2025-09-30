@@ -1,14 +1,15 @@
-package org.example.connect_frontend_backend.service;
+package org.example.connect_frontend_backend.service.implement;
 
 import org.example.connect_frontend_backend.model.Todo;
 import org.example.connect_frontend_backend.repository.TodoRepository;
+import org.example.connect_frontend_backend.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TodoServiceImpl implements TodoService{
+public class TodoServiceImpl implements TodoService {
 
     @Autowired
     private TodoRepository todoRepository;

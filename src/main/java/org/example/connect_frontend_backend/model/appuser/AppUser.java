@@ -28,8 +28,8 @@ public class AppUser implements UserDetails {
     private String password;
     private String email;
     private AppUserRole appUserRole;
-    private Boolean enabled;
-    private Boolean locked;
+    private Boolean enabled =false;
+    private Boolean locked = false;
 
 
     public AppUser(String firstName, String lastName, String password, String email, AppUserRole appUserRole) {

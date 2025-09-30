@@ -30,7 +30,7 @@ public class WebSecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/registration").permitAll()
+                        .requestMatchers("/api/registration/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults());   // or .httpBasic(Customizer.withDefaults())

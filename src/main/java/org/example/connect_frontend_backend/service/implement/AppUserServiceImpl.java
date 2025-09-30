@@ -1,23 +1,34 @@
-package org.example.connect_frontend_backend.service;
+package org.example.connect_frontend_backend.service.implement;
 
-import lombok.AllArgsConstructor;
+
+import lombok.RequiredArgsConstructor;
 import org.example.connect_frontend_backend.model.appuser.AppUser;
+import org.example.connect_frontend_backend.model.appuser.token.ConfirmationToken;
 import org.example.connect_frontend_backend.repository.AppUserRepository;
+import org.example.connect_frontend_backend.service.ConfirmationTokenService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AppUserServiceImpl implements UserDetailsService {
 
     private final String USER_NOT_FOUND = "User with email %s not found";
     private final AppUserRepository appUserRepository;
+    private final ConfirmationTokenService confirmationTokenService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Value("${token.expire.time}")
+    private int tokenExpireTime;
+
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
@@ -45,19 +56,19 @@ public class AppUserServiceImpl implements UserDetailsService {
 
         appUserRepository.save(appUser);
 
-//        String token = UUID.randomUUID().toString();
-//
-//        ConfirmationToken confirmationToken = new ConfirmationToken(
-//                token,
-//                LocalDateTime.now(),
-//                LocalDateTime.now().plusMinutes(15),
-//                appUser
-//        );
-//
-//        confirmationTokenService.saveConfirmationToken(
-//                confirmationToken);
-//
-////        TODO: SEND EMAIL
+        String token = UUID.randomUUID().toString();
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(tokenExpireTime),
+                appUser
+        );
+
+        confirmationTokenService.saveConfirmationToken(
+                confirmationToken);
+
+//        TODO: SEND EMAIL
 
         return "worked";
     }
