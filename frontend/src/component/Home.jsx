@@ -72,6 +72,19 @@ export const Home = () => {
     }
   };
 
+  const logout = async () => {
+  try {
+    await fetch("http://localhost:8080/logout", {
+      method: "POST",
+      credentials: "include", // send JSESSIONID
+    });
+    window.location.href = "http://localhost:8080/login"; // or your React login page
+  } catch (err) {
+    console.error("Logout failed:", err);
+  }
+};
+
+
   return (
     <div className="w-[50vw] h-[80vh] bg-white rounded-xl">
       <div className="bg-[#758AA2] p-5 flex gap-5 justify-center rounded-t-xl">
@@ -148,6 +161,14 @@ export const Home = () => {
             </div>
           ))
         )}
+      </div>
+      <div className="flex justify-center p-5 border-t">
+        <button
+          onClick={logout}
+          className="py-2 px-5 rounded-md bg-red-600 text-white hover:bg-red-700"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );
