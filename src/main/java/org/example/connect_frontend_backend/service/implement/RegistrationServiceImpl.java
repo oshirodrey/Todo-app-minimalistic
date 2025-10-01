@@ -5,7 +5,7 @@ import org.example.connect_frontend_backend.model.RegistrationRequest;
 import org.example.connect_frontend_backend.model.appuser.AppUser;
 import org.example.connect_frontend_backend.model.appuser.AppUserRole;
 import org.example.connect_frontend_backend.model.appuser.token.ConfirmationToken;
-import org.example.connect_frontend_backend.model.security.EmailValidator;
+import org.example.connect_frontend_backend.security.EmailValidator;
 import org.example.connect_frontend_backend.service.RegistrationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,5 +62,7 @@ public class RegistrationServiceImpl implements RegistrationService {
                 confirmationToken.getAppUser().getEmail());
         return "confirmed";
     }
+
+
 
 }

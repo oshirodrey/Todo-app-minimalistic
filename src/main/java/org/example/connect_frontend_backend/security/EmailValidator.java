@@ -1,4 +1,4 @@
-package org.example.connect_frontend_backend.model.security;
+package org.example.connect_frontend_backend.security;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Validator;

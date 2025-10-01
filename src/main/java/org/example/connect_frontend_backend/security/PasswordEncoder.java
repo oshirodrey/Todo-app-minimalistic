@@ -1,4 +1,4 @@
-package org.example.connect_frontend_backend.model.security;
+package org.example.connect_frontend_backend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

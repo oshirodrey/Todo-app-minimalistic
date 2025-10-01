@@ -11,6 +11,12 @@ public interface TodoService {
 
     void deleteTodo(Long id) throws Exception;
 
+    // new
+    List<Todo> getMyTodos(String email);
+
+    Todo createForUser(String email, String title, String description);
+
+    void deleteMyTodo(String email, Long id) throws Exception;
 
 
 
