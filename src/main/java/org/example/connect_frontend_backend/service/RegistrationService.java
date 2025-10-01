@@ -6,4 +6,6 @@ import org.example.connect_frontend_backend.model.appuser.AppUser;
 public interface RegistrationService {
     public String register(RegistrationRequest request);
 
+    public String confirmToken(String token);
+
 }

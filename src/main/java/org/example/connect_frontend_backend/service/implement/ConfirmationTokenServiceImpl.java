@@ -6,15 +6,27 @@ import org.example.connect_frontend_backend.repository.ConfirmationTokenReposito
 import org.example.connect_frontend_backend.service.ConfirmationTokenService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
 
 
+
     private final ConfirmationTokenRepository confirmationTokenRepository;
 
-    @Override
     public void saveConfirmationToken(ConfirmationToken token) {
         confirmationTokenRepository.save(token);
+    }
+
+    public Optional<ConfirmationToken> getToken(String token) {
+        return confirmationTokenRepository.findByToken(token);
+    }
+
+    public int setConfirmedAt(String token) {
+        return confirmationTokenRepository.updateConfirmedAt(
+                token, LocalDateTime.now());
     }
 }

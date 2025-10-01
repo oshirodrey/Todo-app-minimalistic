@@ -70,7 +70,11 @@ public class AppUserServiceImpl implements UserDetailsService {
 
 //        TODO: SEND EMAIL
 
-        return "worked";
+        return token;
+    }
+
+    public int enableAppUser(String email) {
+        return appUserRepository.enableAppUser(email);
     }
 
 
