@@ -14,8 +14,14 @@ import java.util.Optional;
 @Transactional(readOnly=true)
 public interface AppUserRepository extends JpaRepository<AppUser,Long> {
     Optional<AppUser> findByEmail(String email);
-
+    // Optional here wont return null if the email is not found
     @Transactional
+    // Transactional annotation is needed to make sure that the database is updated on both sides.
+    //Imagine you're transferring money between bank accounts:
+    //Subtract $100 from Account A
+    //Add $100 to Account B
+    //If step 1 succeeds but step 2 fails, you've lost $100!
+    // @Transactional prevents this by ensuring both operations complete or neither does.
     @Modifying
     @Query("UPDATE AppUser a " +
             "SET a.enabled = TRUE WHERE a.email = ?1")

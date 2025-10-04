@@ -55,14 +55,6 @@ public class AppUser implements UserDetails {
     public String getUsername() {
         return email;
     }
-
-//    public String getFirstName() {
-//        return firstName;
-//    }
-//    public String getLastName() {
-//        return lastName;
-//    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;

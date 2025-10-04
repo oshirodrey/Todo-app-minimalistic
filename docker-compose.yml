@@ -1,0 +1,71 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql8
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: connect_f_b
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_pass
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+      - "3307:3306"
+    command: ["--default-authentication-plugin=mysql_native_password",
+              "--character-set-server=utf8mb4",
+              "--collation-server=utf8mb4_unicode_ci"]
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uapp_user -papp_pass || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: .           # <---- Todo/ (this folder)
+      dockerfile: Dockerfile
+    container_name: todo-backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/connect_f_b?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: app_user
+      SPRING_DATASOURCE_PASSWORD: app_pass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+
+  # --- Pick ONE frontend option ---
+
+  # Dev (hot reload on 3000)
+  frontend:
+    build:
+      context: ./frontend   # <---- Todo/frontend
+      dockerfile: Dockerfile.dev
+    container_name: react-frontend
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      # If you use REACT_APP_* vars, add here
+      # REACT_APP_API_BASE: http://localhost:8080
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+
+  # Production (Nginx) — uncomment this block and comment the dev one if you prefer
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   container_name: react-frontend
+  #   ports:
+  #     - "3000:80"   # if nginx keeps default 80
+  #   depends_on:
+  #     - backend
+
+volumes:
+  mysql_data:

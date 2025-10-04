@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.connect_frontend_backend.model.appuser.AppUser;
 import org.example.connect_frontend_backend.model.appuser.token.ConfirmationToken;
 import org.example.connect_frontend_backend.repository.AppUserRepository;
+import org.example.connect_frontend_backend.service.AppUserService;
 import org.example.connect_frontend_backend.service.ConfirmationTokenService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class AppUserServiceImpl implements UserDetailsService {
+public class AppUserServiceImpl implements UserDetailsService, AppUserService {
 
     private final String USER_NOT_FOUND = "User with email %s not found";
     private final AppUserRepository appUserRepository;
@@ -37,6 +38,7 @@ public class AppUserServiceImpl implements UserDetailsService {
         ));
     }
 
+    @Override
     public String signUpUser(AppUser appUser) {
         boolean userExists = appUserRepository
                 .findByEmail(appUser.getEmail())
@@ -73,6 +75,7 @@ public class AppUserServiceImpl implements UserDetailsService {
         return token;
     }
 
+    @Override
     public int enableAppUser(String email) {
         return appUserRepository.enableAppUser(email);
     }
