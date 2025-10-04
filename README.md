@@ -58,7 +58,7 @@ This will:
 
 ### Step 3: Visit the app!
 
-- 🔙 Login page: [http://localhost:8080]
+- 🔙 Login page: [LOGIN PAGE](http://localhost:8080)
 
 ### Want to reset all data?
 Run:
