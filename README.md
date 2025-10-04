@@ -58,7 +58,81 @@ This will:
 
 ### Step 3: Visit the app!
 
-- 🔙 Login page: [LOGIN PAGE](http://localhost:8080)
+- 🔙 Login page: [http://localhost:8080](http://localhost:8080)
+
+## 📬 (IMPORTANT) Using Postman for API Creating Accounts and Testing
+
+Here are common Postman requests for interacting with the backend API:
+
+---
+
+### 📝 1. Register a New User
+
+**Method:** `POST`  
+**URL:** `http://localhost:8080/api/registration`  
+**Headers:**
+```json
+Content-Type: application/json
+```
+
+**Body (JSON):**
+```json
+{
+  "firstName": "Alice",
+  "lastName": "Wonderland",
+  "email": "alice@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Expected Response:** `200 OK` (or a confirmation message saying check your email)
+
+---
+
+### ✅ 2. Confirm Registration Token
+
+**Method:** `GET`  
+**URL:** `http://localhost:8080/api/registration/confirm?token=PASTE_TOKEN_HERE`  
+
+Replace `PASTE_TOKEN_HERE` with the token received via email (or check logs if email sending is mocked).
+
+**Expected Response:** `200 OK` – account is activated.
+
+---
+
+### 🧾 3. Create a Todo Item
+
+**Method:** `POST`  
+**URL:** `http://localhost:8080/api/todos`  
+**Headers:**
+```json
+Content-Type: application/json
+Authorization: Bearer YOUR_AUTH_TOKEN   <-- if using JWT
+```
+
+**Body (JSON):**
+```json
+{
+  "title": "Finish Docker Setup",
+  "description": "Wrap up README, test containers"
+}
+```
+
+**Expected Response:** `200 OK` with created todo object
+
+---
+
+### 📋 4. Get All Todos
+
+**Method:** `GET`  
+**URL:** `http://localhost:8080/api/todos`  
+**Headers:**
+```json
+Authorization: Bearer YOUR_AUTH_TOKEN
+```
+
+**Expected Response:** List of todos for the authenticated user.
+
 
 ### Want to reset all data?
 Run:
